@@ -75,6 +75,14 @@ class ExtImportHookTestCase(FlaskTestCase):
         self.assert_equal(submodule.__name__, 'flask_newext_package.submodule')
         self.assert_equal(submodule.test_function(), 42)
 
+    def test_flaskext_new_package_import_submodule_compare_internal(self):
+        from flask_newext_package.submodule import TestClass as TestClassInternal
+        from flask.ext.newext_package.submodule import TestClass
+
+        self.assert_equal(TestClass.__module__, 'flask_newext_package.submodule')
+        self.assert_equal(TestClassInternal.__module__, 'flask_newext_package.submodule')
+        self.assert_equal(TestClass, TestClassInternal)
+
     def test_flaskext_old_simple_import_normal(self):
         from flask.ext.oldext_simple import ext_id
         self.assert_equal(ext_id, 'oldext_simple')
